@@ -1,10 +1,76 @@
 import * as React from "react";
 import 'semantic-ui-css/semantic.css';
-import { Header, Container, Button, Grid, Segment, Form, FormField, Select, List, Label } from 'semantic-ui-react';
+import { Header, Container, Button, Grid, Segment, Form, Select, List, Label } from 'semantic-ui-react';
 
 import Task from '../components/Task';
+import NewTaskForm from '../components/NewTaskForm';
 
 const HomePage = () => {
+  const initialNewTask = {
+    name: '',
+    color: ''
+  }
+
+  const [newTaskOpen, setNewTaskOpen] = React.useState(false);
+  const [newTask, setNewTask] = React.useState(initialNewTask);
+  const [list, setList] = React.useState([]);
+
+  function openNewTask() {
+    setNewTaskOpen(true);
+  }
+  function closeNewTask() {
+    setNewTaskOpen(false);
+  }
+
+  function addNewTask() {
+    const listClone = [ ...list ];
+    listClone.push(newTask);
+    setList(listClone);
+    setNewTask(initialNewTask);
+    closeNewTask();
+  }
+/*
+  const taskList = [];
+
+  list.forEach((task, index) => {
+    taskList.push(
+      <Task key={`${task.name}-${index}`} name={task.name} color={task.color}></Task>
+    );
+  });
+*/
+
+  
+  function editTask(index){
+    console.log("edit", index);
+    const newList = list.map((task, i) => {
+      if (i !== index) { return task; }
+      return {
+        name: `Edit ${task.name}`, //NEED TO BE ABLE TO PROPERLY EDIT CONTENT!!!!!!!!!!!!HW!!!!!!!!!
+        color: task.color
+      }
+    });
+    setList(newList);
+  }
+
+  function deleteTask() {
+    // Array.filter
+    // get links from assignment to learn more!
+  }
+
+  const taskList = list.map((task, index) => {
+    return ( <Task 
+      key={`${task.name}-${index}`} 
+      name={task.name} 
+      color={task.color} 
+      editTask={editTask} 
+      index={index}>
+      </Task> );
+  });
+
+  
+  
+
+
   return (
     <React.Fragment>
       <Container>
@@ -16,43 +82,23 @@ const HomePage = () => {
           <Header textAlign='center' as='h1'>To Do List</Header>
           </Grid.Column>
           <Grid.Column textAlign='right' width='4'>
-          <Button icon='plus' color='green'></Button>
+          <Button icon='plus' color='green' onClick={openNewTask}></Button>
           </Grid.Column>
         </Grid>
 
-        <Segment>
-          <Header as='h2'>New Task</Header>
-          <Form>
-            <FormField 
-            control='input'
-            label='Task Name'
-            placeholder='Enter Task Name...'
-            inline
-            />
-            <FormField 
-            control={Select}
-            label='Task Color'
-            placeholder='Choose Color...'
-            inline
-            options={[
-              {text: 'Red', value: 'red'},
-              {text: 'Yellow', value: 'yellow'},
-              {text: 'Green', value: 'green'},
-            ]}
-            />
-            <Button.Group fluid>
-            <Button color='red'>Cancel</Button>
-            <Button.Or/>
-            <Button color='green'>Add Task</Button>
-            </Button.Group>
-          </Form>
-        </Segment>
+        {newTaskOpen ? (
+          <NewTaskForm 
+            closeNewTask={closeNewTask} 
+            newTask={newTask} 
+            setNewTask={setNewTask}
+            addNewTask={addNewTask}
+          />
+        ) : null}
+
        
        
         <List>
-          <Task name='Task 1' color='yellow'></Task>
-          <Task name='Task 2' color='orange'></Task>
-          <Task name='Task 3' color='green'></Task>
+          {taskList}
         </List>
 
       </Container>
