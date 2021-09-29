@@ -52,8 +52,8 @@ const HomePage = () => {
 */
 
   
-  function editTask(index){       //Will not update class
-    console.log("edit", index);
+  function editTask(index){       //Will not update changes to class
+    console.log("edit", index);     //unfortunately cannot figure out
     const newList = list.map((task, i) => {
 
       if (i !== index) { return task; }
@@ -66,7 +66,7 @@ const HomePage = () => {
         color: task.color
       }
     });
-    setList(newList);
+    setList(newList);  //should update changes????? 
     setNewEditTask(initialNewTask);
     closeEditTask();
   }
@@ -108,7 +108,7 @@ const HomePage = () => {
 
           <Grid.Column width='5'> 
           <Modal 
-              centered={false}           /* The Modal with instructions on how to use the App */
+              centered={false}           /* New Modal with instructions on how to use the App */
               open={openModal}
               onClose={() => setOpenModal(false)}
               onOpen={() => setOpenModal(true)}
@@ -153,8 +153,9 @@ const HomePage = () => {
           {taskList}
         </List>
 
-
-        <Label>
+        <Label
+                    /*New Icon for marking end of List*/
+        > 
           <Icon name='angle double right' />This marks the end of the list.
         </Label>
       </Container>
