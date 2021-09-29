@@ -1,12 +1,12 @@
 import React from 'react';
 import { Segment, Header, Form, Button, Select, Input } from 'semantic-ui-react';
 
-const NewTaskForm = ({closeNewTask, newTask, setNewTask, addNewTask}) => {
+const EditTaskForm = ({closeEditTask, newTask, setNewEditTask, editTask}) => {
 
     function changeNewTask(e, {value, name}) {
       const newTaskClone = { ...newTask };
       newTaskClone[name] = value;
-      setNewTask(newTaskClone);
+      setNewEditTask(newTaskClone);
 
       //console.log(e, name, value);
 
@@ -50,9 +50,9 @@ const NewTaskForm = ({closeNewTask, newTask, setNewTask, addNewTask}) => {
             name='color'
             />
             <Button.Group fluid>
-            <Button color='red' onClick={closeNewTask}>Cancel</Button>
+            <Button color='red' onClick={closeEditTask}>Cancel</Button>
             <Button.Or/>
-            <Button color='green' onClick={addNewTask}>Add Task</Button>
+            <Button color='green' onClick={editTask}>Edit Task</Button>
             </Button.Group>
           </Form>
           </Segment>
@@ -61,4 +61,4 @@ const NewTaskForm = ({closeNewTask, newTask, setNewTask, addNewTask}) => {
   );
 };
 
-export default NewTaskForm;
+export default EditTaskForm;
